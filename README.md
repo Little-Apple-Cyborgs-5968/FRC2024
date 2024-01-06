@@ -1,4 +1,4 @@
-# FRC-2024
+# FRC2024
 
 Team 5968 Codebase for FRC 2024 
 
