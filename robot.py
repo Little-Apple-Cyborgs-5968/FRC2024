@@ -52,6 +52,9 @@ class MyRobot(wpilib.TimedRobot):
             self.gyroscope.getRotation2d(),
         )
 
+        if self.controller.getLeftBumper():
+            print("hello")
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
