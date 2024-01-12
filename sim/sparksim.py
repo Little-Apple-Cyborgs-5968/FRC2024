@@ -1,4 +1,4 @@
-from rev import CANSparkMax, CANSparkMaxLowLevel
+import rev
 import wpilib
 from wpilib import simulation
 from wpimath.controller import PIDController
@@ -26,8 +26,8 @@ if wpilib.RobotBase.isSimulation():
             super().__init__(0, 0, 0)
         def setFF(self, ff):
             pass
-        def setReference(self, value: float, ctrl: CANSparkMaxLowLevel.ControlType): 
-            if (ctrl != CANSparkMax.ControlType.kPosition):
+        def setReference(self, value: float, ctrl: rev.CANSparkMaxLowLevel.ControlType): 
+            if (ctrl != rev.CANSparkMax.ControlType.kPosition):
                 raise(f'control type {ctrl} not implemented')
             self.setSetpoint(value)
 
@@ -47,3 +47,8 @@ if wpilib.RobotBase.isSimulation():
             pass
         def setIdleMode(self, mode):
             pass
+
+else:
+    import rev
+
+    CANSparkMax = rev.CANSparkMax

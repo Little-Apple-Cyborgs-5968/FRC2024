@@ -1,6 +1,6 @@
 import wpilib 
 from wpilib.drive import MecanumDrive
-from rev import CANSparkMax
+from sim.sparksim import CANSparkMax
 from robot_map import USB, CAN
 from navx import AHRS
 
@@ -49,7 +49,7 @@ class MyRobot(wpilib.TimedRobot):
             self.controller.getLeftY(),
             self.controller.getLeftX(),
             self.controller.getRightX(),
-            self.gyroscope.getRotation2d(),
+            self.gyroscope.getRotation2d()
         )
 
         if self.controller.getLeftBumper():
