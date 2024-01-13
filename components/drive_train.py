@@ -1,3 +1,4 @@
+import rev
 from sim.sparksim import CANSparkMax
 from wpilib import SPI
 from wpilib.drive import MecanumDrive
@@ -8,10 +9,10 @@ from robot_map import CAN
 class DriveTrain:
     def __init__(self, controller):
         # Intializes motors for the drive basse.
-        self.frontRightMotor = CANSparkMax(CAN.frontRightChannel, CANSparkMax.MotorType.kBrushless)
-        self.rearRightMotor = CANSparkMax(CAN.rearRightChannel, CANSparkMax.MotorType.kBrushless)
-        self.frontLeftMotor = CANSparkMax(CAN.frontLeftChannel, CANSparkMax.MotorType.kBrushless)
-        self.rearLeftMotor = CANSparkMax(CAN.rearLeftChannel, CANSparkMax.MotorType.kBrushless)
+        self.frontRightMotor = CANSparkMax(CAN.frontRightChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.rearRightMotor = CANSparkMax(CAN.rearRightChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.frontLeftMotor = CANSparkMax(CAN.frontLeftChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.rearLeftMotor = CANSparkMax(CAN.rearLeftChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.frontRightMotor.restoreFactoryDefaults()
         self.rearRightMotor.restoreFactoryDefaults()
         self.frontLeftMotor.restoreFactoryDefaults()
