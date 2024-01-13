@@ -4,8 +4,8 @@ Team 5968 Codebase for FRC 2024
 
 ## Todo:
 
-- Custom Dashboard
+- SmartDashboard Customizations 
 
 - Limelight Vision Processing Stuff (April Tags)
 
-- Stateful Autonomous Modes
+- Stateful Autonomous Modes (Based on Team Station)
