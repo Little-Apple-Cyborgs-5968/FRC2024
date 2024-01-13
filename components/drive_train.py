@@ -46,4 +46,4 @@ class DriveTrain:
         )
 
         if self.controller.getBackButton():
-            self.DriveTrain.gyroscope.reset()
+            self.gyroscope.reset()
