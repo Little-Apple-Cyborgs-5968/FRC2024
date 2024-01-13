@@ -26,7 +26,7 @@ if wpilib.RobotBase.isSimulation():
             super().__init__(0, 0, 0)
         def setFF(self, ff):
             pass
-        def setReference(self, value: float, ctrl: rev.CANSparkMaxLowLevel.ControlType): 
+        def setReference(self, value: float, ctrl: rev.CANSparkLowLevel.ControlType): 
             if (ctrl != rev.CANSparkMax.ControlType.kPosition):
                 raise(f'control type {ctrl} not implemented')
             self.setSetpoint(value)
