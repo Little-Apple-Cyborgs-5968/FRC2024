@@ -11,7 +11,7 @@ class MyRobot(wpilib.TimedRobot):
         self.controller = wpilib.XboxController(USB.controller1Channel)
         self.DriveTrain = DriveTrain(self.controller)
         self.components = {"DriveTrain": self.DriveTrain}
-        self.auto = AutonomousModeSelector("autonomous", self.components)
+        self.auto = AutonomousModeSelector("default", self.components)
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
@@ -33,8 +33,6 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.DriveTrain.teleopPeriodic()
-        if self.controller.getBackButton():
-            self.DriveTrain.gyroscope.reset()
 
 
 if __name__ == "__main__":
