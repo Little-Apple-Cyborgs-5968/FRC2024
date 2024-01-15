@@ -6,6 +6,6 @@ Team 5968 Codebase for FRC 2024
 
 - SmartDashboard Customizations, Gram FMSInfo (Use Sim for testing) Syoma
 
-- Limelight Vision Processing Stuff (April Tags) George
+- Limelight Vision Processing Stuff, Network Tables (April Tags) George
 
 - Stateful Autonomous Modes (Based on Team Station)
