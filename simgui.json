@@ -21,10 +21,7 @@
         }
       },
       "/SmartDashboard/Field": {
-        "image": "/Users/markushoehn/Desktop/FRC2024/2024-field.png",
-        "window": {
-          "visible": true
-        }
+        "image": "/Users/markushoehn/Desktop/FRC2024/2024-field.png"
       }
     }
   },
@@ -49,7 +46,9 @@
     },
     "Server": {
       "open": true
-    },
-    "visible": true
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

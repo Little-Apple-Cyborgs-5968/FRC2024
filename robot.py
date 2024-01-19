@@ -11,7 +11,7 @@ class MyRobot(wpilib.TimedRobot):
         self.controller = wpilib.XboxController(USB.controller1Channel)
         self.DriveTrain = DriveTrain(self.controller)
         self.components = {"DriveTrain": self.DriveTrain}
-        self.auto = AutonomousModeSelector("default", self.components)
+        self.auto = AutonomousModeSelector("autonomous", self.components)
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
