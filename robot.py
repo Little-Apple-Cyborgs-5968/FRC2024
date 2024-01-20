@@ -4,7 +4,7 @@ from components.drive_train import DriveTrain
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
-from limeLight import LimeLight
+from components.limeLight import LimeLight
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -15,6 +15,7 @@ class MyRobot(wpilib.TimedRobot):
         self.components = {"DriveTrain": self.DriveTrain}
         self.auto = AutonomousModeSelector("autonomous", self.components)
         self.inst = ntcore.NetworkTableInstance.getDefault()
+        self.inst.startServer()
         self.limeLight = LimeLight(self.inst)
 
     def autonomousInit(self):
