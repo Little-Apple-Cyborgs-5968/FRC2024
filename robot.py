@@ -35,7 +35,9 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.DriveTrain.teleopPeriodic()
-        print(f"{self.alliance}, {self.location}")
+        # print(f"{self.alliance}, {self.location}")
+        # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
+        
 
 
 if __name__ == "__main__":
