@@ -3,6 +3,8 @@ import wpilib.drive
 from components.drive_train import DriveTrain
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
+import ntcore
+from limeLight import LimeLight
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -12,6 +14,8 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain = DriveTrain(self.controller)
         self.components = {"DriveTrain": self.DriveTrain}
         self.auto = AutonomousModeSelector("autonomous", self.components)
+        self.inst = ntcore.NetworkTableInstance.getDefault()
+        self.limeLight = LimeLight(self.inst)
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
