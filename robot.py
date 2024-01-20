@@ -34,10 +34,15 @@ class MyRobot(wpilib.TimedRobot):
     def teleopInit(self):
         """This function is run once each time the robot enters teleoperated mode."""
         self.DriveTrain.teleopInit()
+        self.alliance = wpilib.DriverStation.getAlliance()
+        self.location = wpilib.DriverStation.getLocation()
 
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.DriveTrain.teleopPeriodic()
+        # print(f"{self.alliance}, {self.location}")
+        # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
+        
 
 
 if __name__ == "__main__":

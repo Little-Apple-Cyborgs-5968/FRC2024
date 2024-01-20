@@ -49,4 +49,4 @@ class DriveSim:
         yaw = -pose_deg
         self.navx_yaw.set(yaw)
 
-        self.log.stagger(now, f'{speeds} pose_deg={pose_deg:.1f} yaw={yaw:.1f}')
+        # self.log.stagger(now, f'{speeds} pose_deg={pose_deg:.1f} yaw={yaw:.1f}')
