@@ -26,7 +26,6 @@
         }
       },
       "/SmartDashboard/Field": {
-        "image": "/Users/markushoehn/Desktop/FRC2024/2024-field.png",
         "window": {
           "visible": true
         }
@@ -65,6 +64,7 @@
         "open": true
       },
       "open": true
-    }
+    },
+    "visible": true
   }
 }

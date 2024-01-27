@@ -1,4 +1,5 @@
 import rev
+from wpilib import SmartDashboard
 from sim.sparksim import CANSparkMax
 from wpilib import SPI
 from wpilib.drive import MecanumDrive
@@ -47,3 +48,5 @@ class DriveTrain:
 
         if self.controller.getBackButton():
             self.gyroscope.reset()
+
+        SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())

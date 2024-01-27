@@ -1,7 +1,7 @@
 {
   "Docking": {
     "Data": [
-      "DockNode    ID=0x00000001 Pos=151,56 Size=986,488 Split=X",
+      "DockNode    ID=0x00000001 Pos=139,208 Size=986,488 Split=X",
       "DockNode  ID=0x00000002 Parent=0x00000001 SizeRef=81,167 Selected=0x2D9B9756",
       "DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=86,167 Selected=0x050F715F"
     ]
@@ -14,8 +14,8 @@
       "style": "0",
       "userScale": "2",
       "width": "1169",
-      "xpos": "481",
-      "ypos": "179"
+      "xpos": "399",
+      "ypos": "566"
     }
   },
   "Table": {
@@ -35,7 +35,7 @@
     "###/FMSInfo": {
       "Collapsed": "0",
       "DockId": "0x00000003,0",
-      "Pos": "630,56",
+      "Pos": "618,208",
       "Size": "507,488"
     },
     "###/SmartDashboard/Autonomous Mode": {
@@ -45,7 +45,7 @@
     },
     "###/SmartDashboard/Field": {
       "Collapsed": "0",
-      "Pos": "313,323",
+      "Pos": "437,146",
       "Size": "588,242"
     },
     "###FMS": {
@@ -61,7 +61,7 @@
     "###NetworkTables": {
       "Collapsed": "0",
       "DockId": "0x00000002,0",
-      "Pos": "151,56",
+      "Pos": "139,208",
       "Size": "477,488"
     },
     "###NetworkTables Info": {
