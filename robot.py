@@ -16,7 +16,7 @@ class MyRobot(wpilib.TimedRobot):
         self.auto = AutonomousModeSelector("autonomous", self.components)
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
-        self.limeLight = LimeLight(self.inst)
+        self.LimeLight = LimeLight(self.inst)
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
@@ -40,6 +40,10 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.DriveTrain.teleopPeriodic()
+        if self.LimeLight.getNumber("tv"):
+            print("target detected")
+        else:
+            print("no target")
         # print(f"{self.alliance}, {self.location}")
         # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
         
