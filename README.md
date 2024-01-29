@@ -4,7 +4,7 @@ Team 5968 Codebase for FRC 2024
 
 ## Todo:
 
-- Custom Dashboard frontend Syoma
+- Custom Dashboard frontend Syoma/Andrei
 
 - Custom Dashboard interfacing still does not work Markus
 
