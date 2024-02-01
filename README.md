@@ -8,6 +8,6 @@ Team 5968 Codebase for FRC 2024
 
 - Custom Dashboard interfacing still does not work Markus
 
-- Limelight Vision Processing Stuff, Network Tables (April Tags) George/Markus/Wyatt
+- Limelight Vision Processing Stuff, Network Tables (April Tags) George/Wyatt
 
 - Stateful Autonomous Modes (Based on Team Station) Do later
