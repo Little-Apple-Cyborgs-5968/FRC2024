@@ -8,7 +8,7 @@ from navx import AHRS
 from robot_map import CAN
 
 class DriveTrain:
-    def __init__(self, controller):
+    def __init__(self, controller, LimeLight):
         # Intializes motors for the drive basse.
         self.frontRightMotor = CANSparkMax(CAN.frontRightChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.rearRightMotor = CANSparkMax(CAN.rearRightChannel, rev.CANSparkMax.MotorType.kBrushless)
@@ -27,7 +27,7 @@ class DriveTrain:
                                        self.rearRightMotor)
         self.gyroscope = AHRS(SPI.Port.kMXP)
         self.gyroscope.reset()
-        
+        self.LimeLight = LimeLight
     def autonomousInit(self):
         pass
     
@@ -50,3 +50,13 @@ class DriveTrain:
             self.gyroscope.reset()
 
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
+    
+    def pointAtTarget(self):
+        '''points toward current limelight target. Returns cursor offset'''
+        tx = self.LimeLight.getNumber('tx', 0)
+        if tx > 0:
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
+        elif tx < 0:
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
+        return tx
+    

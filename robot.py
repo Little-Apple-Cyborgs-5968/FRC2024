@@ -11,12 +11,13 @@ class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """This function is called upon program startup."""
         self.controller = wpilib.XboxController(USB.controller1Channel)
-        self.DriveTrain = DriveTrain(self.controller)
-        self.components = {"DriveTrain": self.DriveTrain}
-        self.auto = AutonomousModeSelector("autonomous", self.components)
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
+        self.DriveTrain = DriveTrain(self.controller, self.LimeLight)
+        self.components = {"DriveTrain": self.DriveTrain, "LimeLight": self.LimeLight}
+        self.auto = AutonomousModeSelector("autonomous", self.components)
+
 
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
@@ -46,6 +47,7 @@ class MyRobot(wpilib.TimedRobot):
             print("no target")
         # print(f"{self.alliance}, {self.location}")
         # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
+    
         
 
 
