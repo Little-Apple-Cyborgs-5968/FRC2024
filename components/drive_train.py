@@ -48,6 +48,8 @@ class DriveTrain:
 
         if self.controller.getBackButton():
             self.gyroscope.reset()
+        if self.controller.getLeftBumper():
+            self.pointAtTargt
 
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
     
