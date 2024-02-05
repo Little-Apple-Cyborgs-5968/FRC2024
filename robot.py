@@ -10,11 +10,15 @@ from components.limeLight import LimeLight
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """This function is called upon program startup."""
-        self.controller = wpilib.XboxController(USB.controller1Channel)
+        self.JoystickCtrl = False
+        if self.JoystickCtrl:
+            self.controller = wpilib.Joystick(USB.controller1Channel)
+        else:
+            self.controller= wpilib.XboxController(USB.controller1Channel)
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
-        self.DriveTrain = DriveTrain(self.controller, self.LimeLight)
+        self.DriveTrain = DriveTrain(self.controller, self.LimeLight, self.JoystickCtrl)
         self.components = {"DriveTrain": self.DriveTrain, "LimeLight": self.LimeLight}
         self.auto = AutonomousModeSelector("autonomous", self.components)
 
@@ -41,10 +45,10 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.DriveTrain.teleopPeriodic()
-        if self.LimeLight.getNumber("tv"):
-            print("target detected")
-        else:
-            print("no target")
+        #if self.LimeLight.getNumber("tv"):
+        #    print("target detected")
+        #else:
+        #    print("no target")
         # print(f"{self.alliance}, {self.location}")
         # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
     
