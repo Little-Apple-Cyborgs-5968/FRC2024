@@ -4,8 +4,10 @@ Team 5968 Codebase for FRC 2024
 
 ## Todo:
 
-- FRCDashboard Andrei/Syoma/Markus
+- Custom Dashboard frontend Syoma/Andrei
 
-- Limelight Vision Processing Stuff, Network Tables (April Tags) George/Markus
+- Custom Dashboard interfacing still does not work Markus
 
-- Stateful Autonomous Modes (Based on Team Station) Markus
+- Limelight Vision Processing Stuff, Network Tables (April Tags) George/Wyatt
+
+- Stateful Autonomous Modes (Based on Team Station) Do later
