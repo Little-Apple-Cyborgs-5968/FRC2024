@@ -1,6 +1,6 @@
 import rev
 from wpilib import SmartDashboard
-from sim.sparksim import CANSparkMax
+from sim.spark_sim import CANSparkMax
 from wpilib import SPI
 from wpilib.drive import MecanumDrive
 from navx import AHRS

@@ -4,7 +4,7 @@ from components.drive_train import DriveTrain
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
-from components.limeLight import LimeLight
+from components.lime_light import LimeLight
 
 
 class MyRobot(wpilib.TimedRobot):
