@@ -62,12 +62,12 @@ class DriveTrain:
 
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
     
-    def pointAtTarget(self):
-        '''points toward current limelight target. Returns cursor offset'''
-        tx = self.LimeLight.getNumber('tx', 0)
-        if tx > 0:
-            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
-        elif tx < 0:
-            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
-        return tx
+#    def pointAtTarget(self):
+#        '''points toward current limelight target. Returns cursor offset'''
+#        tx = self.LimeLight.getNumber('tx', 0)
+#        if tx > 0:
+#            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
+#        elif tx < 0:
+#            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
+#        return tx
     
