@@ -59,9 +59,15 @@ class DriveTrain:
                 self.gyroscope.reset()
             if self.controller.getLeftBumper():
                 self.pointAtTarget()
+        self.putValues()
 
+    def putValues(self):
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
-    
+        SmartDashboard.putNumber("frontRightMotor", self.frontRightMotor.get())
+        SmartDashboard.putNumber("frontLeftMotor", self.frontLeftMotor.get())
+        SmartDashboard.putNumber("rearRightMotor", self.rearRightMotor.get())
+        SmartDashboard.putNumber("rearLeftMotor", self.rearLeftMotor.get())
+
 #    def pointAtTarget(self):
 #        '''points toward current limelight target. Returns cursor offset'''
 #        tx = self.LimeLight.getNumber('tx', 0)
