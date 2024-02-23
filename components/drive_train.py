@@ -29,6 +29,7 @@ class DriveTrain:
         self.gyroscope = AHRS(SPI.Port.kMXP)
         self.gyroscope.reset()
         self.LimeLight = LimeLight
+        
     def autonomousInit(self):
         pass
     

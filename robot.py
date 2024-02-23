@@ -41,6 +41,7 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain.teleopInit()
         self.alliance = wpilib.DriverStation.getAlliance()
         self.location = wpilib.DriverStation.getLocation()
+        # wpilib.SmartDashboard.getValue()
 
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""

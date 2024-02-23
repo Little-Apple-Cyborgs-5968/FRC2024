@@ -8,7 +8,8 @@ class CAN:
     rearLeftChannel = 4
     pivotOneChannel = 5
     pivotTwoChannel = 6
-    shooterOneChannel = 7
-    shooterTwoChannel = 8
-    climberOneChannel = 9
-    climberTwoChannel = 10
+    intakeOneChannel = 7
+    intakeTwoChannel = 8
+    shooterChannel = 9
+    climberOneChannel = 10
+    climberTwoChannel = 11
