@@ -58,17 +58,37 @@ class DriveTrain:
 
             if self.controller.getBackButton():
                 self.gyroscope.reset()
-            if self.controller.getLeftBumper():
+            if self.controller.getLeftBumper() and self.LimeLight.getNumber('tv'):
                 self.pointAtTarget()
+            if self.controller.getRightBumper() and self.LimeLight.getNumber('tv'):
+                self.driveAtSpeaker()
 
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
     
-#    def pointAtTarget(self):
-#        '''points toward current limelight target. Returns cursor offset'''
-#        tx = self.LimeLight.getNumber('tx', 0)
-#        if tx > 0:
-#            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
-#        elif tx < 0:
-#            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
-#        return tx
+    def pointAtTarget(self):
+        '''points toward current limelight target. Returns cursor offset'''
+        tx = self.LimeLight.getNumber('tx', 0)
+        if tx > 0:
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
+        elif tx < 0:
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
+        return tx
     
+    def driveAtSpeaker(self):
+        '''drives toward speaker'''
+        tx = self.LimeLight.getNumber('tx', 0)
+        if tx > 0:
+            turn_speed = -tx / 30 + 0.05
+        elif tx < 0:
+            turn_speed = -tx / 30 - 0.05
+        
+        ANGLE = 12
+        diff = self.LimeLight.getNumber('ty') - ANGLE
+        if diff > 0:
+            drive_speed = -diff / 20 - 0.05
+        elif diff < 0:
+            drive_speed = -diff / 20 + 0.05
+        if abs(tx) > 1 or abs(diff) > 1:
+            self.robotDrive.driveCartesian(drive_speed, 0, 0, turn_speed)
+        else:
+            self.robotDrive.stopMotor()
