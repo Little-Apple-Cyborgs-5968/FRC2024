@@ -38,5 +38,10 @@ class Controller:
         if self.JoystickCtrl:
             return None
         else:
-            return self.hardware.getLeftBumper
+            return self.hardware.getLeftBumper()
         
+    def getLeftBumper(self):
+        if self.JoystickCtrl:
+            return None
+        else:
+            return self.hardware.getRightBumper()
