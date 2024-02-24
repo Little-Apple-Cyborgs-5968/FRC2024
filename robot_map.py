@@ -1,5 +1,5 @@
 class USB:
-    controller1Channel = 0
+    controllerChannel = 0
 
 class CAN:
     rearRightChannel = 1
