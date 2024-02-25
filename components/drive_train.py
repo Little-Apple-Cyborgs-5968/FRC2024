@@ -34,6 +34,7 @@ class DriveTrain:
     
     def autonomousPeriodic(self):
         pass
+        self.putValues()
 
     def teleopInit(self):
         pass
