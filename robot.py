@@ -1,5 +1,6 @@
 import wpilib
 import wpilib.drive
+from wpilib import SmartDashboard
 from components.drive_train import DriveTrain
 from components.shooter import Shooter
 from components.climber import Climber
@@ -41,6 +42,7 @@ class MyRobot(wpilib.TimedRobot):
         self.Climber.autonomousPeriodic()
         self.Intake.autonomousPeriodic()
         self.auto.periodic()
+        self.putValues()
     
     def disabledInit(self):
         self.auto.disable()
@@ -51,9 +53,6 @@ class MyRobot(wpilib.TimedRobot):
         self.Shooter.teleopInit()
         self.Climber.teleopInit()
         self.Intake.teleopInit()
-        self.alliance = wpilib.DriverStation.getAlliance()
-        self.location = wpilib.DriverStation.getLocation()
-        # wpilib.SmartDashboard.getValue()
 
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
@@ -61,15 +60,23 @@ class MyRobot(wpilib.TimedRobot):
         self.Shooter.teleopPeriodic()
         self.Climber.teleopPeriodic()
         self.Intake.teleopPeriodic()
-        #if self.LimeLight.getNumber("tv"):
-        #    print("target detected")
-        #else:
-        #    print("no target")
-        # print(f"{self.alliance}, {self.location}")
-        # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
+        self.putValues()
     
-        
-
+    def putValues(self):
+        SmartDashboard.putNumber("yaw", self.DriveTrain.gyroscope.getYaw())
+        SmartDashboard.putNumber("frontRightMotor", self.DriveTrain.frontRightMotor.get())
+        SmartDashboard.putNumber("frontLeftMotor", self.DriveTrain.frontLeftMotor.get())
+        SmartDashboard.putNumber("rearRightMotor", self.DriveTrain.rearRightMotor.get())
+        SmartDashboard.putNumber("rearLeftMotor", self.DriveTrain.rearLeftMotor.get())
+        SmartDashboard.putNumber("climberMotorOne", self.Climber.climberMotorOne.get())
+        SmartDashboard.putNumber("climberMotorTwo", self.Climber.climberMotorTwo.get())
+        SmartDashboard.putNumber("shooterMotor", self.Shooter.shooterMotor.get())
+        SmartDashboard.putNumber("intakeMotorOne", self.Intake.intakeMotorOne.get())
+        SmartDashboard.putNumber("intakeMotorTwo", self.Intake.intakeMotorTwo.get())
+        SmartDashboard.putNumber("pivotMotorOne", self.Intake.pivotMotorOne.get())
+        SmartDashboard.putNumber("pivotMotorTwo", self.Intake.pivotMotorTwo.get())
+        SmartDashboard.putNumber("alliance", wpilib.DriverStation.getAlliance())
+        SmartDashboard.putNumber("location", wpilib.DriverStation.getLocation())
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
