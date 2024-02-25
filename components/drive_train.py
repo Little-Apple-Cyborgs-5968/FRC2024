@@ -54,14 +54,14 @@ class DriveTrain:
                 self.controller.getRightX(),
                 -self.gyroscope.getRotation2d(),
             )
-
-            if self.controller.getBackButton():
-                self.gyroscope.reset()
-            if self.controller.getLeftBumper() and self.LimeLight.getNumber('tv'):
-                self.pointAtTarget()
-            if self.controller.getRightBumper() and self.LimeLight.getNumber('tv'):
-                self.driveAtSpeaker()
-
+   
+        if self.controller.getBackButton():
+            self.gyroscope.reset()
+        if self.controller.getLeftBumper():
+            self.pointAtTarget()
+        if self.controller.getRightBumper() and self.LimeLight.getNumber('tv'):
+            self.driveAtSpeaker()
+            
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
     
     def pointAtTarget(self):
