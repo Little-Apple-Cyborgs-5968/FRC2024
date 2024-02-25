@@ -8,7 +8,7 @@ from navx import AHRS
 from robot_map import CAN
 
 class DriveTrain:
-    def __init__(self, controller, LimeLight, JoystickCtrl):
+    def __init__(self, controller, LimeLight):
         # Intializes motors for the drive basse.
         self.frontRightMotor = CANSparkMax(CAN.frontRightChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.rearRightMotor = CANSparkMax(CAN.rearRightChannel, rev.CANSparkMax.MotorType.kBrushless)
@@ -23,7 +23,6 @@ class DriveTrain:
 
         # Sets up the controller and drive train.
         self.controller = controller
-        self.JoystickCtrl = JoystickCtrl
         self.robotDrive = MecanumDrive(self.frontLeftMotor, self.rearLeftMotor, self.frontRightMotor,
                                        self.rearRightMotor)
         self.gyroscope = AHRS(SPI.Port.kMXP)
@@ -56,11 +55,12 @@ class DriveTrain:
                 self.controller.getRightX(),
                 -self.gyroscope.getRotation2d(),
             )
-
+   
         if self.controller.getBackButton():
             self.gyroscope.reset()
         if self.controller.getLeftBumper():
             self.pointAtTarget()
+            
         self.putValues()
 
     def putValues(self):
@@ -70,12 +70,30 @@ class DriveTrain:
         SmartDashboard.putNumber("rearRightMotor", self.rearRightMotor.get())
         SmartDashboard.putNumber("rearLeftMotor", self.rearLeftMotor.get())
 
-#    def pointAtTarget(self):
-#        '''points toward current limelight target. Returns cursor offset'''
-#        tx = self.LimeLight.getNumber('tx', 0)
-#        if tx > 0:
-#            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
-#        elif tx < 0:
-#            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
-#        return tx
+    def pointAtTarget(self):
+        '''points toward current limelight target. Returns cursor offset'''
+        tx = self.LimeLight.getNumber('tx', 0)
+        if tx > 0:
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
+        elif tx < 0:
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
+        return tx
     
+    def driveAtSpeaker(self):
+        '''drives toward speaker'''
+        tx = self.LimeLight.getNumber('tx', 0)
+        if tx > 0:
+            turn_speed = -tx / 30 + 0.05
+        elif tx < 0:
+            turn_speed = -tx / 30 - 0.05
+        
+        ANGLE = 12
+        diff = self.LimeLight.getNumber('ty') - ANGLE
+        if diff > 0:
+            drive_speed = -diff / 20 - 0.05
+        elif diff < 0:
+            drive_speed = -diff / 20 + 0.05
+        if abs(tx) > 1 or abs(diff) > 1:
+            self.robotDrive.driveCartesian(drive_speed, 0, 0, turn_speed)
+        else:
+            self.robotDrive.stopMotor()
