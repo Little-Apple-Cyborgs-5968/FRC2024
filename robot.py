@@ -3,10 +3,11 @@ import wpilib.drive
 from components.drive_train import DriveTrain
 from components.shooter import Shooter
 from components.climber import Climber
+from components.intake import Intake
+from components.lime_light import LimeLight
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
-from components.lime_light import LimeLight
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -20,7 +21,8 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain = DriveTrain(self.controller, self.LimeLight)
         self.Shooter = Shooter(self.controller)
         self.Climber = Climber(self.controller)
-        self.components = {"DriveTrain": self.DriveTrain, "Shooter": self.Shooter, "Climber": self.Climber, "LimeLight": self.LimeLight}
+        self.Intake = Intake(self.controller)
+        self.components = {"DriveTrain": self.DriveTrain, "Shooter": self.Shooter, "Climber": self.Climber, "Intake": self.Intake, "LimeLight": self.LimeLight}
         self.auto = AutonomousModeSelector("autonomous", self.components)
 
 
@@ -29,6 +31,7 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain.autonomousInit()
         self.Shooter.autonomousInit()
         self.Climber.autonomousInit()
+        self.Intake.autonomousInit()
         self.auto.start()
 
     def autonomousPeriodic(self):
@@ -36,6 +39,7 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain.autonomousPeriodic()
         self.Shooter.autonomousPeriodic()
         self.Climber.autonomousPeriodic()
+        self.Intake.autonomousPeriodic()
         self.auto.periodic()
     
     def disabledInit(self):
@@ -46,6 +50,7 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain.teleopInit()
         self.Shooter.teleopInit()
         self.Climber.teleopInit()
+        self.Intake.teleopInit()
         self.alliance = wpilib.DriverStation.getAlliance()
         self.location = wpilib.DriverStation.getLocation()
         # wpilib.SmartDashboard.getValue()
@@ -55,6 +60,7 @@ class MyRobot(wpilib.TimedRobot):
         self.DriveTrain.teleopPeriodic()
         self.Shooter.teleopPeriodic()
         self.Climber.teleopPeriodic()
+        self.Intake.teleopPeriodic()
         #if self.LimeLight.getNumber("tv"):
         #    print("target detected")
         #else:
