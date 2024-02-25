@@ -6,6 +6,7 @@ class Shooter:
     def __init__(self, controller):
         # Intializes motor
         self.shooterMotor = rev.CANSparkMax(CAN.shooterChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.shooterMotor.restoreFactoryDefaults()
         self.shooterSpeed = 0.7
         self.controller = controller
         

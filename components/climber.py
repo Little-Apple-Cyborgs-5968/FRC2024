@@ -5,35 +5,38 @@ from sim.spark_sim import CANSparkMax
 from robot_map import CAN
 
 class Climber:
-    def __init__(self, controller, JoystickCtrl):
+    def __init__(self, controller):
         # Initialize motors for climbing
-        self.climberOneChannel = CANSparkMax(CAN.climberOneChannel, rev.CANSparkMax.MotorType.kBrushless)
-        self.climberTwoChannel = CANSparkMax(CAN.climberOneChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.climberMotorOne = CANSparkMax(CAN.climberOneChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.climberMotorTwo = CANSparkMax(CAN.climberTwoChannel, rev.CANSparkMax.MotorType.kBrushless)
         
-        self.climberOneChannel.restoreFactoryDefaults()
-        self.climberTwoChannel.restoreFactoryDefaults()
-
-        self.climberOneChannel.setInverted(True)
-        self.climberTwoChannel.setInverted(True)
+        self.climberMotorOne.restoreFactoryDefaults()
+        self.climberMotorTwo.restoreFactoryDefaults()
 
         # Sets up the controller and climber motors
         self.controller = controller
-        self.JoystickCtrl = JoystickCtrl
 
         self.climber_speed = 0.2
 
-del teleopPeriodic(self):
-    # Handles the movement of the drive base
-    if self.JoystickCtrl:
+    def autonomousInit(self):
+        pass
+    
+    def autonomousPeriodic(self):
+        pass
+
+    def teleopInit(self):
+        pass
+
+    def teleopPeriodic(self):
         # Contract arms
-        if self.controller.getYButton(self):
-            self.climberOneChannel.set(self.climber_speed)
-            self.climberTwoChannel.set(-self.climber_speed)
+        if self.controller.getYButton():
+            self.climberMotorOne.set(self.climber_speed)
+            self.climberMotorTwo.set(self.climber_speed)
         # Retract arms
-        elif self.controller.getBButton(self):
-            self.climberOneChannel.set(-self.climber_speed)
-            self.climberTwoChannel.set(self.climber_speed)
+        elif self.controller.getBButton():
+            self.climberMotorOne.set(-self.climber_speed)
+            self.climberMotorTwo.set(-self.climber_speed)
         else:
-            self.climberOneChannel.set(0)
-            self.climberTwoChannel.set(0)
+            self.climberMotorOne.set(0)
+            self.climberMotorTwo.set(0)
         
