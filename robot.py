@@ -1,6 +1,7 @@
 import wpilib
 import wpilib.drive
 from components.drive_train import DriveTrain
+from components.shooter import Shooter
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
@@ -19,6 +20,7 @@ class MyRobot(wpilib.TimedRobot):
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
         self.DriveTrain = DriveTrain(self.controller, self.LimeLight, self.JoystickCtrl)
+        self.Shooter = Shooter(self.controller)
         self.components = {"DriveTrain": self.DriveTrain, "LimeLight": self.LimeLight}
         self.auto = AutonomousModeSelector("autonomous", self.components)
 
@@ -26,11 +28,13 @@ class MyRobot(wpilib.TimedRobot):
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
         self.DriveTrain.autonomousInit()
+        self.Shooter.autonomousInit()
         self.auto.start()
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
         self.DriveTrain.autonomousPeriodic()
+        self.Shooter.autonomousPeriodic()
         self.auto.periodic()
     
     def disabledInit(self):
@@ -39,6 +43,7 @@ class MyRobot(wpilib.TimedRobot):
     def teleopInit(self):
         """This function is run once each time the robot enters teleoperated mode."""
         self.DriveTrain.teleopInit()
+        self.Shooter.teleopInit()
         self.alliance = wpilib.DriverStation.getAlliance()
         self.location = wpilib.DriverStation.getLocation()
         # wpilib.SmartDashboard.getValue()
@@ -46,6 +51,7 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
         self.DriveTrain.teleopPeriodic()
+        self.Shooter.teleopPeriodic()
         #if self.LimeLight.getNumber("tv"):
         #    print("target detected")
         #else:
