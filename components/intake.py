@@ -14,7 +14,7 @@ class Intake:
         self.pivotMotorTwo.restoreFactoryDefaults()
         self.intakeMotorOne.restoreFactoryDefaults()
         self.intakeMotorTwo.restoreFactoryDefaults()
-        self.intakeMotorTwo.setInverted()
+        self.intakeMotorTwo.setInverted(True)
 
         self.pivotPIDControllerOne = self.pivotMotorOne.getPIDController()
         self.pivotPIDControllerOne.setP(0.5) # Don't use these values
