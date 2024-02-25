@@ -4,7 +4,7 @@ Team 5968 Codebase for FRC 2024
 
 ## Todo:
 
-- Custom Dashboard, PID Tuning Syoma/Andrei
+- Custom Dashboard, PID Tuning Syoma/Andrei/Nutsa
 
 - Vision Stuff, Limelight, PID control, Second USB Camera Wyatt/Goerge
 
