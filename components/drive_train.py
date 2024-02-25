@@ -41,20 +41,12 @@ class DriveTrain:
 
     def teleopPeriodic(self):
         # Handles the movement of the drive base.
-        if self.JoystickCtrl:
-            self.robotDrive.driveCartesian(
-                -self.controller.getY(),
-                self.controller.getX(),
-                self.controller.getZ(),
-                -self.gyroscope.getRotation2d(),
-            )
-        else:
-            self.robotDrive.driveCartesian(
-                -self.controller.getLeftY(),
-                self.controller.getLeftX(),
-                self.controller.getRightX(),
-                -self.gyroscope.getRotation2d(),
-            )
+        self.robotDrive.driveCartesian(
+            -self.controller.getLeftY(),
+            self.controller.getLeftX(),
+            self.controller.getRightX(),
+            -self.gyroscope.getRotation2d(),
+        )
    
         if self.controller.getBackButton():
             self.gyroscope.reset()

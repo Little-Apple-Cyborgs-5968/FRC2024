@@ -17,7 +17,7 @@ class MyRobot(wpilib.TimedRobot):
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
-        self.DriveTrain = DriveTrain(self.controller, self.LimeLight, self.JoystickCtrl)
+        self.DriveTrain = DriveTrain(self.controller, self.LimeLight)
         self.Shooter = Shooter(self.controller)
         self.Climber = Climber(self.controller)
         self.components = {"DriveTrain": self.DriveTrain, "Shooter": self.Shooter, "Climber": self.Climber, "LimeLight": self.LimeLight}
