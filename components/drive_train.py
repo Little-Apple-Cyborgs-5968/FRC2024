@@ -28,7 +28,7 @@ class DriveTrain:
         self.gyroscope = AHRS(SPI.Port.kMXP)
         self.gyroscope.reset()
         self.LimeLight = LimeLight
-        self.TURN_CONST = 30
+        self.TURN_CONST = 80
         self.DRIVE_CONST = 20
         self.MIN_SPEED = 0.05
     def autonomousInit(self):
@@ -52,7 +52,7 @@ class DriveTrain:
    
         if self.controller.getBackButton():
             self.gyroscope.reset()
-        if self.controller.getLeftBumper():
+        if self.controller.getPOV() == 90 and self.LimeLight.getNumber('tv'):
             self.pointAtTarget()
             
         self.putValues()
@@ -67,11 +67,11 @@ class DriveTrain:
     def pointAtTarget(self):
         '''points toward current limelight target. Returns cursor offset'''
         tx = self.LimeLight.getNumber('tx', 0)
+        print(f"tx {tx}")
         if tx > 0:
-            self.robotDrive.driveCartesian(0, 0, 0, -tx / self.TURN_CONST + self.MIN_SPEED)
+            self.robotDrive.driveCartesian(0, 0, tx / self.TURN_CONST - self.MIN_SPEED)
         elif tx < 0:
-            self.robotDrive.driveCartesian(0, 0, 0, -tx / self.TURN_CONST - self.MIN_SPEED)
-        return tx
+            self.robotDrive.driveCartesian(0, 0, tx / self.TURN_CONST + self.MIN_SPEED)
     
     def driveAtSpeaker(self):
         '''drives toward speaker'''
@@ -88,6 +88,6 @@ class DriveTrain:
         elif diff < 0:
             drive_speed = -diff / self.DRIVE_CONST + self.MIN_SPEED
         if abs(tx) > 1 or abs(diff) > 1:
-            self.robotDrive.driveCartesian(drive_speed, 0, 0, turn_speed)
+            self.robotDrive.driveCartesian(drive_speed, 0, turn_speed)
         else:
             self.robotDrive.stopMotor()
