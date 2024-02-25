@@ -28,7 +28,9 @@ class DriveTrain:
         self.gyroscope = AHRS(SPI.Port.kMXP)
         self.gyroscope.reset()
         self.LimeLight = LimeLight
-        
+        self.TURN_CONST = 30
+        self.DRIVE_CONST = 20
+        self.MIN_SPEED = 0.05
     def autonomousInit(self):
         pass
     
@@ -66,25 +68,25 @@ class DriveTrain:
         '''points toward current limelight target. Returns cursor offset'''
         tx = self.LimeLight.getNumber('tx', 0)
         if tx > 0:
-            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 + 0.05)
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / self.TURN_CONST + self.MIN_SPEED)
         elif tx < 0:
-            self.robotDrive.driveCartesian(0, 0, 0, -tx / 30 - 0.05)
+            self.robotDrive.driveCartesian(0, 0, 0, -tx / self.TURN_CONST - self.MIN_SPEED)
         return tx
     
     def driveAtSpeaker(self):
         '''drives toward speaker'''
         tx = self.LimeLight.getNumber('tx', 0)
         if tx > 0:
-            turn_speed = -tx / 30 + 0.05
+            turn_speed = -tx / self.TURN_CONST + self.MIN_SPEED
         elif tx < 0:
-            turn_speed = -tx / 30 - 0.05
+            turn_speed = -tx / self.TURN_CONST - self.MIN_SPEED
         
         ANGLE = 12
         diff = self.LimeLight.getNumber('ty') - ANGLE
         if diff > 0:
-            drive_speed = -diff / 20 - 0.05
+            drive_speed = -diff / self.DRIVE_CONST - self.MIN_SPEED
         elif diff < 0:
-            drive_speed = -diff / 20 + 0.05
+            drive_speed = -diff / self.DRIVE_CONST + self.MIN_SPEED
         if abs(tx) > 1 or abs(diff) > 1:
             self.robotDrive.driveCartesian(drive_speed, 0, 0, turn_speed)
         else:
