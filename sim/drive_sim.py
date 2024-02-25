@@ -19,6 +19,13 @@ class DriveSim:
         self.rl_motor = simulation.PWMSim(CAN.rearLeftChannel)
         self.fr_motor = simulation.PWMSim(CAN.frontRightChannel)
         self.rr_motor = simulation.PWMSim(CAN.rearRightChannel)
+        self.p1_motor = simulation.PWMSim(CAN.pivotOneChannel)
+        self.p2_motor = simulation.PWMSim(CAN.pivotTwoChannel)
+        self.i1_motor = simulation.PWMSim(CAN.intakeOneChannel)
+        self.i2_motor = simulation.PWMSim(CAN.intakeTwoChannel)
+        self.sc_motor = simulation.PWMSim(CAN.shooterChannel)
+        self.c1_motor = simulation.PWMSim(CAN.climberOneChannel)
+        self.c2_motor = simulation.PWMSim(CAN.climberTwoChannel)
 
         # Gyro
         self.navx = simulation.SimDeviceSim("navX-Sensor[4]")

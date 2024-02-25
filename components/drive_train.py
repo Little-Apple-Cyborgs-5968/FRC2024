@@ -34,36 +34,34 @@ class DriveTrain:
     
     def autonomousPeriodic(self):
         pass
+        self.putValues()
 
     def teleopInit(self):
         pass
 
     def teleopPeriodic(self):
         # Handles the movement of the drive base.
-        if self.JoystickCtrl:
-            self.robotDrive.driveCartesian(
-                -self.controller.getY(),
-                self.controller.getX(),
-                self.controller.getZ(),
-                -self.gyroscope.getRotation2d(),
-            )
-        else:
-            self.robotDrive.driveCartesian(
-                -self.controller.getLeftY(),
-                self.controller.getLeftX(),
-                self.controller.getRightX(),
-                -self.gyroscope.getRotation2d(),
-            )
+        self.robotDrive.driveCartesian(
+            -self.controller.getLeftY(),
+            self.controller.getLeftX(),
+            self.controller.getRightX(),
+            -self.gyroscope.getRotation2d(),
+        )
    
         if self.controller.getBackButton():
             self.gyroscope.reset()
         if self.controller.getLeftBumper():
             self.pointAtTarget()
-        if self.controller.getRightBumper() and self.LimeLight.getNumber('tv'):
-            self.driveAtSpeaker()
             
+        self.putValues()
+
+    def putValues(self):
         SmartDashboard.putNumber("yaw", self.gyroscope.getYaw())
-    
+        SmartDashboard.putNumber("frontRightMotor", self.frontRightMotor.get())
+        SmartDashboard.putNumber("frontLeftMotor", self.frontLeftMotor.get())
+        SmartDashboard.putNumber("rearRightMotor", self.rearRightMotor.get())
+        SmartDashboard.putNumber("rearLeftMotor", self.rearLeftMotor.get())
+
     def pointAtTarget(self):
         '''points toward current limelight target. Returns cursor offset'''
         tx = self.LimeLight.getNumber('tx', 0)

@@ -1,11 +1,11 @@
 import rev
-
+from sim.spark_sim import CANSparkMax
 from robot_map import CAN
 
 class Shooter:
     def __init__(self, controller):
         # Intializes motor
-        self.shooterMotor = rev.CANSparkMax(CAN.shooterChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.shooterMotor = CANSparkMax(CAN.shooterChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.shooterMotor.restoreFactoryDefaults()
         self.shooterSpeed = 0.7
         self.controller = controller
