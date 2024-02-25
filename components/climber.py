@@ -1,14 +1,11 @@
 import rev
-from wpilib import SmartDashboard
-from sim.spark_sim import CANSparkMax
-
 from robot_map import CAN
 
 class Climber:
     def __init__(self, controller):
         # Initialize motors for climbing
-        self.climberMotorOne = CANSparkMax(CAN.climberOneChannel, rev.CANSparkMax.MotorType.kBrushless)
-        self.climberMotorTwo = CANSparkMax(CAN.climberTwoChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.climberMotorOne = rev.CANSparkMax(CAN.climberOneChannel, rev.CANSparkMax.MotorType.kBrushless)
+        self.climberMotorTwo = rev.CANSparkMax(CAN.climberTwoChannel, rev.CANSparkMax.MotorType.kBrushless)
         
         self.climberMotorOne.restoreFactoryDefaults()
         self.climberMotorTwo.restoreFactoryDefaults()
