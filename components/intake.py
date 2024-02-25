@@ -18,18 +18,17 @@ class Intake:
         self.intakeMotorTwo.setInverted(True)
 
         self.pivotPIDControllerOne = self.pivotMotorOne.getPIDController()
-        self.pivotPIDControllerOne.setP(0.5) # Don't use these values
+        self.pivotPIDControllerOne.setP(0.5)
         self.pivotPIDControllerOne.setI(0.0)
-        self.pivotPIDControllerOne.setD(7)
-        self.pivotPIDControllerOne.setFF(0.0)
-        self.pivotEncoderOne = self.pivotMotorOne.getEncoder()
-
-        self.pivotPIDControllerTwo = self.pivotMotorTwo.getPIDController()
-        self.pivotPIDControllerTwo.setP(0.5) # Don't use these values
+        self.pivotPIDControllerOne.setD(1)
+        self.pivotPIDControllerOne.setFF(0)
+        self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
+        
+        self.pivotPIDControllerTwo.setP(0.5)
         self.pivotPIDControllerTwo.setI(0.0)
-        self.pivotPIDControllerTwo.setD(7)
-        self.pivotPIDControllerTwo.setFF(0.0)
-        self.pivotEncoderTwo = self.pivotMotorTwo.getEncoder()
+        self.pivotPIDControllerTwo.setD(1)
+        self.pivotPIDControllerTwo.setFF(0)
+        self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
 
         self.controller = controller
 
