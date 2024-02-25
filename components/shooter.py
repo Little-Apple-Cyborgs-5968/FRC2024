@@ -1,5 +1,4 @@
 import rev
-
 from robot_map import CAN
 
 class Shooter:
