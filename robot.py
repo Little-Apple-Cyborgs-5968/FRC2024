@@ -75,8 +75,8 @@ class MyRobot(wpilib.TimedRobot):
         SmartDashboard.putNumber("intakeMotorTwo", self.Intake.intakeMotorTwo.get())
         SmartDashboard.putNumber("pivotMotorOne", self.Intake.pivotMotorOne.get())
         SmartDashboard.putNumber("pivotMotorTwo", self.Intake.pivotMotorTwo.get())
-        SmartDashboard.putNumber("alliance", wpilib.DriverStation.getAlliance())
-        SmartDashboard.putNumber("location", wpilib.DriverStation.getLocation())
+        SmartDashboard.putValue("alliance", wpilib.DriverStation.getAlliance())
+        SmartDashboard.putRaw("location", wpilib.DriverStation.getAlliance())
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
