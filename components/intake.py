@@ -14,6 +14,7 @@ class Intake:
         self.pivotMotorTwo.restoreFactoryDefaults()
         self.intakeMotorOne.restoreFactoryDefaults()
         self.intakeMotorTwo.restoreFactoryDefaults()
+        self.intakeMotorTwo.setInverted()
 
         self.pivotPIDControllerOne = self.pivotMotorOne.getPIDController()
         self.pivotPIDControllerOne.setP(0.5) # Don't use these values
@@ -60,25 +61,24 @@ class Intake:
         # Handles control on the intake motor.
         if self.controller.getPOV() == 180:
             self.intakeMotorOne.set(self.intakeSpeed)
-            self.intakeMotorTwo.set(-self.intakeSpeed)
+            self.intakeMotorTwo.set(self.intakeSpeed)
         elif self.controller.getPOV() == 0:
             self.intakeMotorOne.set(-self.intakeSpeed)
-            self.intakeMotorTwo.set(self.intakeSpeed)
+            self.intakeMotorTwo.set(-self.intakeSpeed)
         else:
             self.intakeMotorOne.set(0)
             self.intakeMotorTwo.set(0)
     
         # Handles control on the shoulder motor.
         if self.controller.getRightBumper():
-            self.pivotMotorOne.set(0.5)    
-            self.pivotMotorTwo.set(0.5)    
-            self.pivotOnePosition = self.pivotEncoderOne.getPosition()
-            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition()
+            self.pivotOnePosition = self.pivotEncoderOne.getPosition() + 0.1
+            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() + 0.1
         elif self.controller.getLeftBumper():
-            self.pivotMotorOne.set(0.01)
-            self.pivotMotorTwo.set(0.01)
+            self.pivotOnePosition = self.pivotEncoderOne.getPosition() - 0.1
+            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() - 0.1
+        else:
             self.pivotOnePosition = self.pivotEncoderOne.getPosition()
             self.pivotTwoPosition = self.pivotEncoderTwo.getPosition()
-        else:
-            self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
-            self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
+
+        self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
+        self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
