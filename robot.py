@@ -12,11 +12,8 @@ from components.lime_light import LimeLight
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """This function is called upon program startup."""
-        self.JoystickCtrl = False
-        if self.JoystickCtrl:
-            self.controller = wpilib.Joystick(USB.controllerChannel)
-        else:
-            self.controller= wpilib.XboxController(USB.controllerChannel)
+
+        self.controller= wpilib.XboxController(USB.controllerChannel)
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
