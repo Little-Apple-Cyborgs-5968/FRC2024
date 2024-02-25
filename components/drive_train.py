@@ -8,7 +8,7 @@ from navx import AHRS
 from robot_map import CAN
 
 class DriveTrain:
-    def __init__(self, controller, LimeLight, JoystickCtrl):
+    def __init__(self, controller, LimeLight):
         # Intializes motors for the drive basse.
         self.frontRightMotor = CANSparkMax(CAN.frontRightChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.rearRightMotor = CANSparkMax(CAN.rearRightChannel, rev.CANSparkMax.MotorType.kBrushless)
@@ -23,7 +23,6 @@ class DriveTrain:
 
         # Sets up the controller and drive train.
         self.controller = controller
-        self.JoystickCtrl = JoystickCtrl
         self.robotDrive = MecanumDrive(self.frontLeftMotor, self.rearLeftMotor, self.frontRightMotor,
                                        self.rearRightMotor)
         self.gyroscope = AHRS(SPI.Port.kMXP)
