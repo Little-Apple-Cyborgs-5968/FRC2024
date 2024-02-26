@@ -24,15 +24,20 @@ class Intake:
         self.pivotPIDControllerOne.setFF(0)
         self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
         
+        self.pivotPIDControllerTwo = self.pivotMotorTwo.getPIDController()
         self.pivotPIDControllerTwo.setP(0.5)
         self.pivotPIDControllerTwo.setI(0.0)
         self.pivotPIDControllerTwo.setD(1)
         self.pivotPIDControllerTwo.setFF(0)
         self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
 
+        self.pivotEncoderOne = self.pivotMotorOne.getEncoder()
+        self.pivotEncoderTwo = self.pivotMotorTwo.getEncoder()
+
         self.controller = controller
 
-        self.intakeSpeed = 0.35
+        self.intakeInSpeed = 0.35
+        self.intakeOutSpeed = 0.6
         
     def autonomousInit(self):
         pass
@@ -62,11 +67,11 @@ class Intake:
     def teleopPeriodic(self):
         # Handles control on the intake motors.
         if self.controller.getPOV() == 180:
-            self.intakeMotorOne.set(self.intakeSpeed)
-            self.intakeMotorTwo.set(self.intakeSpeed)
+            self.intakeMotorOne.set(self.intakeInSpeed)
+            self.intakeMotorTwo.set(self.intakeInSpeed)
         elif self.controller.getPOV() == 0:
-            self.intakeMotorOne.set(-self.intakeSpeed)
-            self.intakeMotorTwo.set(-self.intakeSpeed)
+            self.intakeMotorOne.set(-self.intakeOutSpeed)
+            self.intakeMotorTwo.set(-self.intakeOutSpeed)
         else:
             self.intakeMotorOne.set(0)
             self.intakeMotorTwo.set(0)
@@ -88,5 +93,5 @@ class Intake:
 
         self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
         self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
-        print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
-        print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
+        # print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
+        # print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
