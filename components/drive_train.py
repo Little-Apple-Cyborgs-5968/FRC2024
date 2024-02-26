@@ -4,7 +4,8 @@ from sim.spark_sim import CANSparkMax
 from wpilib import SPI
 from wpilib.drive import MecanumDrive
 from navx import AHRS
-
+from wpimath.controller import PIDController
+import time
 from robot_map import CAN
 
 class DriveTrain:
@@ -28,9 +29,10 @@ class DriveTrain:
         self.gyroscope = AHRS(SPI.Port.kMXP)
         self.gyroscope.reset()
         self.LimeLight = LimeLight
-        self.TURN_CONST = 80
-        self.DRIVE_CONST = 20
-        self.MIN_SPEED = 0.05
+        
+        self.PIDInit()
+        self.lastPIDExec = time.time()
+
     def autonomousInit(self):
         pass
     
@@ -60,6 +62,8 @@ class DriveTrain:
             self.gyroscope.reset()
         if self.controller.getPOV() == 90 and self.LimeLight.getNumber('tv'):
             self.pointAtTarget()
+        if self.controller.getPOV() == 270 and self.LimeLight.getNumber('tv'):
+            self.driveAtSpeaker()
             
         self.putValues()
 
@@ -73,27 +77,28 @@ class DriveTrain:
     def pointAtTarget(self):
         '''points toward current limelight target. Returns cursor offset'''
         tx = self.LimeLight.getNumber('tx', 0)
-        print(f"tx {tx}")
-        if tx > 0:
-            self.robotDrive.driveCartesian(0, 0, tx / self.TURN_CONST - self.MIN_SPEED)
-        elif tx < 0:
-            self.robotDrive.driveCartesian(0, 0, tx / self.TURN_CONST + self.MIN_SPEED)
-    
+        self.PIDCalculate(-tx, 0, 0, 0)
+        self.robotDrive.driveCartesian(0, 0, self.turnPIDVal)
+
     def driveAtSpeaker(self):
         '''drives toward speaker'''
-        tx = self.LimeLight.getNumber('tx', 0)
-        if tx > 0:
-            turn_speed = -tx / self.TURN_CONST + self.MIN_SPEED
-        elif tx < 0:
-            turn_speed = -tx / self.TURN_CONST - self.MIN_SPEED
-        
+        tx = self.LimeLight.getNumber('tx')        
         ANGLE = 12
-        diff = self.LimeLight.getNumber('ty') - ANGLE
-        if diff > 0:
-            drive_speed = -diff / self.DRIVE_CONST - self.MIN_SPEED
-        elif diff < 0:
-            drive_speed = -diff / self.DRIVE_CONST + self.MIN_SPEED
-        if abs(tx) > 1 or abs(diff) > 1:
-            self.robotDrive.driveCartesian(drive_speed, 0, turn_speed)
-        else:
-            self.robotDrive.stopMotor()
+        ty = self.LimeLight.getNumber('ty')
+        self.PID.Calculate(-tx, ty, 0, ANGLE)
+        self.robotDrive.driveCartesian(self.drivePIDVal, 0, self.turnPIDVal)
+
+    
+    def PIDInit(self):
+        self.turnPIDCam = PIDController(0.9, 0, 0.1)
+        self.drivePIDCam = PIDController(0.9, 0, 0.1)
+        self.turnPIDVal = 0
+        self.drivePIDVal = 0
+    
+    def PIDCalculate(self, turnError = 0, driveError = 0, turnTarget = 0, driveTarget = 0):
+        if time.time() - self.lastPIDExec > 100:
+            self.PIDInit()
+        self.turnPIDVal = self.turnPIDCam.calculate(turnError, turnTarget)
+        self.drivePIDVal = self.drivePIDCam.calculate(driveError, driveTarget)
+        self.lastPIDExec = time.time()
+
