@@ -12,27 +12,32 @@ class Intake:
 
         self.pivotMotorOne.restoreFactoryDefaults()
         self.pivotMotorTwo.restoreFactoryDefaults()
+        self.pivotMotorTwo.setInverted(True)
         self.intakeMotorOne.restoreFactoryDefaults()
         self.intakeMotorTwo.restoreFactoryDefaults()
         self.intakeMotorTwo.setInverted(True)
 
         self.pivotPIDControllerOne = self.pivotMotorOne.getPIDController()
-        self.pivotPIDControllerOne.setP(0.5) # Don't use these values
+        self.pivotPIDControllerOne.setP(0.5)
         self.pivotPIDControllerOne.setI(0.0)
-        self.pivotPIDControllerOne.setD(7)
-        self.pivotPIDControllerOne.setFF(0.0)
-        self.pivotEncoderOne = self.pivotMotorOne.getEncoder()
-
+        self.pivotPIDControllerOne.setD(1)
+        self.pivotPIDControllerOne.setFF(0)
+        self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
+        
         self.pivotPIDControllerTwo = self.pivotMotorTwo.getPIDController()
-        self.pivotPIDControllerTwo.setP(0.5) # Don't use these values
+        self.pivotPIDControllerTwo.setP(0.5)
         self.pivotPIDControllerTwo.setI(0.0)
-        self.pivotPIDControllerTwo.setD(7)
-        self.pivotPIDControllerTwo.setFF(0.0)
+        self.pivotPIDControllerTwo.setD(1)
+        self.pivotPIDControllerTwo.setFF(0)
+        self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
+
+        self.pivotEncoderOne = self.pivotMotorOne.getEncoder()
         self.pivotEncoderTwo = self.pivotMotorTwo.getEncoder()
 
         self.controller = controller
 
-        self.intakeSpeed = 0.35
+        self.intakeInSpeed = 0.35
+        self.intakeOutSpeed = 0.6
         
     def autonomousInit(self):
         pass
@@ -49,36 +54,44 @@ class Intake:
          # Sets PID values for teleoperated.
         self.pivotPIDControllerOne.setP(0.5)
         self.pivotPIDControllerOne.setI(0.0)
-        self.pivotPIDControllerOne.setD(7)
-        self.pivotPIDControllerOne.setFF(0.0)
+        self.pivotPIDControllerOne.setD(1)
+        self.pivotPIDControllerOne.setFF(0)
+        self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
 
         self.pivotPIDControllerTwo.setP(0.5)
         self.pivotPIDControllerTwo.setI(0.0)
-        self.pivotPIDControllerTwo.setD(7)
-        self.pivotPIDControllerTwo.setFF(0.0)
+        self.pivotPIDControllerTwo.setD(1)
+        self.pivotPIDControllerTwo.setFF(0)
+        self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
 
     def teleopPeriodic(self):
-        # Handles control on the intake motor.
+        # Handles control on the intake motors.
         if self.controller.getPOV() == 180:
-            self.intakeMotorOne.set(self.intakeSpeed)
-            self.intakeMotorTwo.set(self.intakeSpeed)
+            self.intakeMotorOne.set(self.intakeInSpeed)
+            self.intakeMotorTwo.set(self.intakeInSpeed)
         elif self.controller.getPOV() == 0:
-            self.intakeMotorOne.set(-self.intakeSpeed)
-            self.intakeMotorTwo.set(-self.intakeSpeed)
+            self.intakeMotorOne.set(-self.intakeOutSpeed)
+            self.intakeMotorTwo.set(-self.intakeOutSpeed)
         else:
             self.intakeMotorOne.set(0)
             self.intakeMotorTwo.set(0)
     
-        # Handles control on the shoulder motor.
+        # Handles control on the pivot motors.
+        self.moving = False
         if self.controller.getRightBumper():
-            self.pivotOnePosition = self.pivotEncoderOne.getPosition() + 0.1
-            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() + 0.1
+            self.pivotOnePosition = self.pivotEncoderOne.getPosition() - 0.25
+            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() - 0.25
+            self.moving = True
         elif self.controller.getLeftBumper():
-            self.pivotOnePosition = self.pivotEncoderOne.getPosition() - 0.1
-            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() - 0.1
-        else:
+            self.pivotOnePosition = self.pivotEncoderOne.getPosition() + 0.5
+            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() + 0.5
+            self.moving = True
+        elif self.moving:
             self.pivotOnePosition = self.pivotEncoderOne.getPosition()
             self.pivotTwoPosition = self.pivotEncoderTwo.getPosition()
+            self.moving = False
 
         self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
         self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
+        # print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
+        # print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
