@@ -61,12 +61,6 @@ class MyRobot(wpilib.TimedRobot):
         self.Shooter.teleopPeriodic()
         self.Climber.teleopPeriodic()
         self.Intake.teleopPeriodic()
-        #if self.LimeLight.getNumber("tv"):
-        #    print("target detected")
-        #else:
-        #    print("no target")
-        # print(f"{self.alliance}, {self.location}")
-        # wpilib.SmartDashboard.putNumber("david", 4) send transitory value to network tables
     
         
 
