@@ -55,9 +55,7 @@ class DriveTrain:
             )
         else:
             self.robotDrive.driveCartesian(0, 0, 0, self.gyroscope.getRotation2d())
-        
-        print(f"LeftY {self.controller.getLeftY()} LeftX {self.controller.getLeftX()} RightX {self.controller.getRightX()}")
-   
+           
         if self.controller.getBackButton():
             self.gyroscope.reset()
         if self.controller.getPOV() == 90 and self.LimeLight.getNumber('tv'):
@@ -83,15 +81,16 @@ class DriveTrain:
     def driveAtSpeaker(self):
         '''drives toward speaker'''
         tx = self.LimeLight.getNumber('tx')        
-        ANGLE = 12
+        ANGLE = 15
         ty = self.LimeLight.getNumber('ty')
-        self.PID.Calculate(-tx, ty, 0, ANGLE)
-        self.robotDrive.driveCartesian(self.drivePIDVal, 0, self.turnPIDVal)
+        self.PIDCalculate(-tx, ty, 0, ANGLE)
+        self.robotDrive.driveCartesian(-self.drivePIDVal, 0, self.turnPIDVal)
+        print(f"tx {tx} ty {ty}")
 
     
     def PIDInit(self):
-        self.turnPIDCam = PIDController(0.9, 0, 0.1)
-        self.drivePIDCam = PIDController(0.9, 0, 0.1)
+        self.turnPIDCam = PIDController(0.01, 0, 0.05)
+        self.drivePIDCam = PIDController(0.05, 0, 0.1)
         self.turnPIDVal = 0
         self.drivePIDVal = 0
     
