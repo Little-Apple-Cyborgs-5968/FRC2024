@@ -47,7 +47,7 @@ class DriveTrain:
         # Handles the movement of the drive base.
         self.robotDrive.driveCartesian(
             self.controller.getLeftY(),
-            self.controller.getLeftX(),
+            -self.controller.getLeftX(),
             self.controller.getRightX(),
             self.gyroscope.getRotation2d(),
         )

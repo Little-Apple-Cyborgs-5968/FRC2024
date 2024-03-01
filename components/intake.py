@@ -55,13 +55,13 @@ class Intake:
         self.pivotTwoPosition = 0
 
          # Sets PID values for teleoperated.
-        self.pivotPIDControllerOne.setP(0.5)
+        self.pivotPIDControllerOne.setP(0.05)
         self.pivotPIDControllerOne.setI(0.0)
         self.pivotPIDControllerOne.setD(1)
         self.pivotPIDControllerOne.setFF(0)
         self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
 
-        self.pivotPIDControllerTwo.setP(0.5)
+        self.pivotPIDControllerTwo.setP(0.05)
         self.pivotPIDControllerTwo.setI(0.0)
         self.pivotPIDControllerTwo.setD(1)
         self.pivotPIDControllerTwo.setFF(0)
@@ -72,7 +72,6 @@ class Intake:
         self.moving = False
 
         if not self.limitSwitch.get() and not self.moving:
-            print("yes")
             self.pivotEncoderOne.setPosition(0)
             self.pivotEncoderTwo.setPosition(0)
             self.pivotOnePosition = 0
@@ -92,13 +91,18 @@ class Intake:
         # Handles control on the pivot motors. Base on one encoder to ensure spinning together
         if self.controller.getRightBumper():
             print("right bumper")
-            self.pivotOnePosition = self.pivotEncoderTwo.getPosition() - 0.25
-            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() - 0.25
+            #self.pivotOnePosition = self.pivotEncoderTwo.getPosition() - 0.25
+            #self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() - 0.25
+            self.pivotOnePosition = -7.5
+            self.pivotTwoPosition = -7.5
+
             self.moving = True
         elif self.controller.getLeftBumper():
             print("left bumper")
-            self.pivotOnePosition = self.pivotEncoderTwo.getPosition() + 0.5
-            self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() + 0.5
+            #self.pivotOnePosition = self.pivotEncoderTwo.getPosition() + 0.5
+            #self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() + 0.5
+            self.pivotOnePosition = 0.1
+            self.pivotTwoPosition = 0.1
             self.moving = True
         elif self.moving:
             self.pivotOnePosition = self.pivotEncoderTwo.getPosition()
@@ -107,5 +111,5 @@ class Intake:
 
         self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
         self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
-        print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
-        print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
+        # print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
+        # print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
