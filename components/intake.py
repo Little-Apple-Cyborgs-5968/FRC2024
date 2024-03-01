@@ -1,9 +1,12 @@
 import rev
 
 from robot_map import CAN
+from wpilib import DigitalInput
 
 class Intake:
     def __init__(self, controller):
+        self.limitSwitch = DigitalInput(0)
+
         # Intializes motor
         self.pivotMotorOne = rev.CANSparkMax(CAN.pivotOneChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.pivotMotorTwo = rev.CANSparkMax(CAN.pivotTwoChannel, rev.CANSparkMax.MotorType.kBrushless)
@@ -65,6 +68,16 @@ class Intake:
         self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
 
     def teleopPeriodic(self):
+
+        self.moving = False
+
+        if not self.limitSwitch.get() and not self.moving:
+            print("yes")
+            self.pivotEncoderOne.setPosition(0)
+            self.pivotEncoderTwo.setPosition(0)
+            self.pivotOnePosition = 0
+            self.pivotTwoPosition = 0
+
         # Handles control on the intake motors.
         if self.controller.getPOV() == 180:
             self.intakeMotorOne.set(self.intakeInSpeed)
@@ -76,22 +89,23 @@ class Intake:
             self.intakeMotorOne.set(0)
             self.intakeMotorTwo.set(0)
     
-        # Handles control on the pivot motors.
-        self.moving = False
+        # Handles control on the pivot motors. Base on one encoder to ensure spinning together
         if self.controller.getRightBumper():
-            self.pivotOnePosition = self.pivotEncoderOne.getPosition() - 0.25
+            print("right bumper")
+            self.pivotOnePosition = self.pivotEncoderTwo.getPosition() - 0.25
             self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() - 0.25
             self.moving = True
         elif self.controller.getLeftBumper():
-            self.pivotOnePosition = self.pivotEncoderOne.getPosition() + 0.5
+            print("left bumper")
+            self.pivotOnePosition = self.pivotEncoderTwo.getPosition() + 0.5
             self.pivotTwoPosition = self.pivotEncoderTwo.getPosition() + 0.5
             self.moving = True
         elif self.moving:
-            self.pivotOnePosition = self.pivotEncoderOne.getPosition()
+            self.pivotOnePosition = self.pivotEncoderTwo.getPosition()
             self.pivotTwoPosition = self.pivotEncoderTwo.getPosition()
             self.moving = False
 
         self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
         self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
-        # print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
-        # print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
+        print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
+        print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
