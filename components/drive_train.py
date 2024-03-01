@@ -45,6 +45,7 @@ class DriveTrain:
             -self.controller.getLeftY(),
             self.controller.getLeftX(),
             self.controller.getRightX(),
+            #might be causing problem 
             -self.gyroscope.getRotation2d(),
         )
    

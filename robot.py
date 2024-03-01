@@ -63,19 +63,28 @@ class MyRobot(wpilib.TimedRobot):
         self.putValues()
     
     def putValues(self):
+        #gyro
         SmartDashboard.putNumber("yaw", self.DriveTrain.gyroscope.getYaw())
+        #groundmotors
         SmartDashboard.putNumber("frontRightMotor", self.DriveTrain.frontRightMotor.get())
         SmartDashboard.putNumber("frontLeftMotor", self.DriveTrain.frontLeftMotor.get())
         SmartDashboard.putNumber("rearRightMotor", self.DriveTrain.rearRightMotor.get())
         SmartDashboard.putNumber("rearLeftMotor", self.DriveTrain.rearLeftMotor.get()) 
+        #misc motors
         SmartDashboard.putNumber("pivotMotorOne", self.Intake.pivotMotorOne.get())
         SmartDashboard.putNumber("pivotMotorTwo", self.Intake.pivotMotorTwo.get())
         SmartDashboard.putNumber("intakeMotorOne", self.Intake.intakeMotorOne.get())
         SmartDashboard.putNumber("intakeMotorTwo", self.Intake.intakeMotorTwo.get())
         SmartDashboard.putNumber("shooterMotor", self.Shooter.shooterMotor.get())
         SmartDashboard.putNumber("climberMotorOne", self.Climber.climberMotorOne.get())
-        SmartDashboard.putNumber("climberMotorTwo", self.Climber.climberMotorTwo.get())#SmartDashboard.putValue("alliance", wpilib.DriverStation.getAlliance())
-        #SmartDashboard.putRaw("location", wpilib.DriverStation.getAlliance())
+        SmartDashboard.putNumber("climberMotorTwo", self.Climber.climberMotorTwo.get())
+        #alliance
+        SmartDashboard.putString("alliance", str(wpilib.DriverStation.getAlliance()))
+        if wpilib.DriverStation.getLocation() != None:
+            SmartDashboard.putNumber("location", float(wpilib.DriverStation.getLocation()))
+        #print("banan") might be importnat
+        
+
 
 if __name__ == "__main__":
     wpilib.run(MyRobot)
