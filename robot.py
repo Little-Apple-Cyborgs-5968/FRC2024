@@ -5,6 +5,7 @@ from components.shooter import Shooter
 from components.climber import Climber
 from components.intake import Intake
 from components.lime_light import LimeLight
+from cscore import CameraServer
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
@@ -13,8 +14,8 @@ import ntcore
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """This function is called upon program startup."""
-
         self.controller= wpilib.XboxController(USB.controllerChannel)
+        self.camera = CameraServer.startAutomaticCapture()
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
