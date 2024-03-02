@@ -6,6 +6,7 @@ from components.shooter import Shooter
 from components.climber import Climber
 from components.intake import Intake
 from components.lime_light import LimeLight
+from cscore import CameraServer
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
@@ -14,8 +15,8 @@ import ntcore
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
         """This function is called upon program startup."""
-
         self.controller= wpilib.XboxController(USB.controllerChannel)
+        self.camera = CameraServer.startAutomaticCapture()
         self.inst = ntcore.NetworkTableInstance.getDefault()
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
@@ -63,14 +64,11 @@ class MyRobot(wpilib.TimedRobot):
         self.putValues()
     
     def putValues(self):
-        #gyro
         SmartDashboard.putNumber("yaw", self.DriveTrain.gyroscope.getYaw())
-        #groundmotors
         SmartDashboard.putNumber("frontRightMotor", self.DriveTrain.frontRightMotor.get())
         SmartDashboard.putNumber("frontLeftMotor", self.DriveTrain.frontLeftMotor.get())
         SmartDashboard.putNumber("rearRightMotor", self.DriveTrain.rearRightMotor.get())
         SmartDashboard.putNumber("rearLeftMotor", self.DriveTrain.rearLeftMotor.get()) 
-        #misc motors
         SmartDashboard.putNumber("pivotMotorOne", self.Intake.pivotMotorOne.get())
         SmartDashboard.putNumber("pivotMotorTwo", self.Intake.pivotMotorTwo.get())
         SmartDashboard.putNumber("intakeMotorOne", self.Intake.intakeMotorOne.get())
@@ -78,11 +76,9 @@ class MyRobot(wpilib.TimedRobot):
         SmartDashboard.putNumber("shooterMotor", self.Shooter.shooterMotor.get())
         SmartDashboard.putNumber("climberMotorOne", self.Climber.climberMotorOne.get())
         SmartDashboard.putNumber("climberMotorTwo", self.Climber.climberMotorTwo.get())
-        #alliance
         SmartDashboard.putString("alliance", str(wpilib.DriverStation.getAlliance()))
         if wpilib.DriverStation.getLocation() != None:
             SmartDashboard.putNumber("location", float(wpilib.DriverStation.getLocation()))
-        #print("banan") might be importnat
         
 
 
