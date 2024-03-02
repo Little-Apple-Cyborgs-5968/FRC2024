@@ -7,10 +7,10 @@ from components.climber import Climber
 from components.intake import Intake
 from components.lime_light import LimeLight
 from cscore import CameraServer
-from networktables import NetworkTables
 from robot_map import USB
 from robotpy_ext.autonomous import AutonomousModeSelector
 import ntcore
+import logging
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -18,10 +18,13 @@ class MyRobot(wpilib.TimedRobot):
         """This function is called upon program startup."""
         self.controller= wpilib.XboxController(USB.controllerChannel)
         self.camera = CameraServer.startAutomaticCapture()
-        NetworkTables.intialize(server="roborio-5968-frc.local")
         # sd = NetworkTables.getTable('SmartDashboard')
         # use this if the wpilib smartdashboard does not work
         self.inst = ntcore.NetworkTableInstance.getDefault()
+        self.inst.startClient4("server")
+        self.inst.setServerTeam(5968)
+        self.inst.startDSClient()
+        self.inst.setServer("host", ntcore.NetworkTableInstance.kDefaultPort4)
         self.inst.startServer()
         self.LimeLight = LimeLight(self.inst)
         self.DriveTrain = DriveTrain(self.controller, self.LimeLight)
@@ -66,6 +69,7 @@ class MyRobot(wpilib.TimedRobot):
         self.Climber.teleopPeriodic()
         self.Intake.teleopPeriodic()
         self.putValues()
+        logging.basicConfig(level=logging.debug)
     
     def putValues(self):
         SmartDashboard.putNumber("yaw", self.DriveTrain.gyroscope.getYaw())

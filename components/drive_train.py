@@ -52,10 +52,10 @@ class DriveTrain:
            
         if self.controller.getBackButton():
             self.gyroscope.reset()
-        if self.controller.getPOV() == 90 and self.LimeLight.getNumber('tv'):
-            self.pointAtTarget()
-        if self.controller.getPOV() == 270 and self.LimeLight.getNumber('tv'):
-            self.driveAtSpeaker()
+        # if self.controller.getPOV() == 90 and self.LimeLight.getNumber('tv'):
+        #     self.pointAtTarget()
+        # if self.controller.getPOV() == 270 and self.LimeLight.getNumber('tv'):
+        #     self.driveAtSpeaker()
             
     def pointAtTarget(self):
         '''points toward current limelight target. Returns cursor offset'''
