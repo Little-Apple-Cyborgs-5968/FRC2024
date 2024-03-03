@@ -138,4 +138,4 @@ class Intake:
         self.pivotPIDControllerOne.setReference(self.pivotOnePosition, rev.CANSparkMax.ControlType.kPosition)
         self.pivotPIDControllerTwo.setReference(self.pivotTwoPosition, rev.CANSparkMax.ControlType.kPosition)
         # print(f"1: {self.pivotEncoderOne.getPosition()} : {self.pivotOnePosition}")
-        print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
+        # print(f"2: {self.pivotEncoderTwo.getPosition()} : {self.pivotTwoPosition}")
