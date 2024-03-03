@@ -47,7 +47,7 @@ class DriveTrain:
             self.controller.getLeftY(),
             -self.controller.getLeftX(),
             self.controller.getRightX(),
-            self.gyroscope.getRotation2d(),
+            -self.gyroscope.getRotation2d(),
         )
            
         if self.controller.getBackButton():
