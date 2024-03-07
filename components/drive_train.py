@@ -28,6 +28,8 @@ class DriveTrain:
         self.gyroscope = AHRS(SPI.Port.kMXP)
         self.gyroscope.reset()
         self.LimeLight = LimeLight
+
+        self.Shooterforward = True
         
         self.PIDInit()
         self.lastPIDExec = time.time()
@@ -43,20 +45,32 @@ class DriveTrain:
 
     def teleopPeriodic(self):
         # Handles the movement of the drive base.
-        self.robotDrive.driveCartesian(
-            self.controller.getLeftY(),
-            -self.controller.getLeftX(),
-            self.controller.getRightX(),
-            -self.gyroscope.getRotation2d(),
-        )
+        if self.Shooterforward:
+            self.robotDrive.driveCartesian(
+                self.controller.getLeftY(),
+                -self.controller.getLeftX(),
+                self.controller.getRightX(),
+                -self.gyroscope.getRotation2d(),
+            )
+        else:
+            self.robotDrive.driveCartesian(
+                -self.controller.getLeftY(),
+                self.controller.getLeftX(),
+                self.controller.getRightX(),
+                -self.gyroscope.getRotation2d(),
+            )
            
         if self.controller.getBackButton():
             self.gyroscope.reset()
         # if self.controller.getPOV() == 90 and self.LimeLight.getNumber('tv'):
         #     self.pointAtTarget()
-        # if self.controller.getPOV() == 270 and self.LimeLight.getNumber('tv'):
-        #     self.driveAtSpeaker()
+        # if self.controller.getAButton() and self.LimeLight.getNumber('tv'):
+        #      self.driveAtSpeaker()
+        if self.controller.getAButton():
+            self.Shooterforward = not self.Shooterforward
             
+
+    # we are not using limelight vision processing
     def pointAtTarget(self):
         '''points toward current limelight target. Returns cursor offset'''
         tx = self.LimeLight.getNumber('tx', 0)
@@ -66,11 +80,18 @@ class DriveTrain:
     def driveAtSpeaker(self):
         '''drives toward speaker'''
         tx = self.LimeLight.getNumber('tx')        
-        ANGLE = 15
+        SPEED = 0.3
+        ANGLE = 12.5
         ty = self.LimeLight.getNumber('ty')
         self.PIDCalculate(-tx, ty, 0, ANGLE)
-        self.robotDrive.driveCartesian(-self.drivePIDVal, 0, self.turnPIDVal)
-        print(f"tx {tx} ty {ty}")
+        driveSpeed = -self.drivePIDVal * SPEED
+        turnSpeed = self.turnPIDVal
+        if abs(tx) < 1:
+            driveSpeed = 0
+        if abs(ty - ANGLE) < 1:
+            turnSpeed = 0
+        self.robotDrive.driveCartesian(driveSpeed, 0, turnSpeed)
+        #print(f"tx {tx} ty {ty}")
 
     
     def PIDInit(self):

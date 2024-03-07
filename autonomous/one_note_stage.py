@@ -2,7 +2,7 @@ from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
 
 class Autonomous(StatefulAutonomous):
     MODE_NAME = "ONE_NOTE_STAGE"
-    # tx: -7.12 ty: 8.8
+    # tx: -7.12 ty: 8.8 this wont work with real speaker
 
     def intialize(self):
         self.intial_called = None
