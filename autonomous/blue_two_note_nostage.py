@@ -1,7 +1,7 @@
 from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
 
 class Autonomous(StatefulAutonomous):
-    MODE_NAME = "TWO_NOTE_NOSTAGE"
+    MODE_NAME = "BLUE_TWO_NOTE_NOSTAGE"
     # tx: 7.12 ty: 8.8
 
     def intialize(self):
@@ -22,7 +22,7 @@ class Autonomous(StatefulAutonomous):
         self.Intake.pivotTwoPosition = -7.5
         self.DriveTrain.robotDrive.driveCartesian(0.3, 0, 0)
         
-    @timed_state(duration=0.6, next_state="next")
+    @timed_state(duration=0.67, next_state="next")
     def rotate(self):
         self.DriveTrain.robotDrive.driveCartesian(0, 0, 0.3)
 
@@ -43,15 +43,17 @@ class Autonomous(StatefulAutonomous):
 
     @timed_state(duration=1, next_state="forward")
     def pause(self):
-        self.Intake.pivotOnePosition = 0.1
-        self.Intake.pivotTwoPosition = 0.1
         self.DriveTrain.robotDrive.driveCartesian(0, 0, 0)
 
-    @timed_state(duration=2, next_state="rotate2")
+    @timed_state(duration=1.65, next_state="rotate2")
     def forward(self):
+        self.Intake.intakeMotorOne.set(0)
+        self.Intake.intakeMotorTwo.set(0)
+        self.Intake.pivotOnePosition = 0.1
+        self.Intake.pivotTwoPosition = 0.1
         self.DriveTrain.robotDrive.driveCartesian(-0.3, 0, 0)
 
-    @timed_state(duration=0.4, next_state="pause2")
+    @timed_state(duration=0.67, next_state="pause2")
     def rotate2(self):
         self.DriveTrain.robotDrive.driveCartesian(0, 0, -0.3)
 

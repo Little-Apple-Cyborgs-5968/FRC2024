@@ -36,15 +36,15 @@ class Intake:
         self.pivotOnePosition = 0
         self.pivotTwoPosition = 0
 
-        self.pivotPIDControllerOne.setP(0.05)
+        self.pivotPIDControllerOne.setP(0.07)
         self.pivotPIDControllerOne.setI(0.0)
-        self.pivotPIDControllerOne.setD(1)
+        self.pivotPIDControllerOne.setD(1.5)
         self.pivotPIDControllerOne.setFF(0)
         self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
 
-        self.pivotPIDControllerTwo.setP(0.05)
+        self.pivotPIDControllerTwo.setP(0.07)
         self.pivotPIDControllerTwo.setI(0.0)
-        self.pivotPIDControllerTwo.setD(1)
+        self.pivotPIDControllerTwo.setD(1.5)
         self.pivotPIDControllerTwo.setFF(0)
         self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
 
@@ -60,15 +60,15 @@ class Intake:
         self.pivotTwoPosition = 0
 
          # Sets PID values for teleoperated.
-        self.pivotPIDControllerOne.setP(0.05)
+        self.pivotPIDControllerOne.setP(0.1)
         self.pivotPIDControllerOne.setI(0.0)
-        self.pivotPIDControllerOne.setD(1)
+        self.pivotPIDControllerOne.setD(1.5)
         self.pivotPIDControllerOne.setFF(0)
         self.pivotPIDControllerOne.setOutputRange(-0.5, 0.5)
 
-        self.pivotPIDControllerTwo.setP(0.05)
+        self.pivotPIDControllerTwo.setP(0.1)
         self.pivotPIDControllerTwo.setI(0.0)
-        self.pivotPIDControllerTwo.setD(1)
+        self.pivotPIDControllerTwo.setD(1.5)
         self.pivotPIDControllerTwo.setFF(0)
         self.pivotPIDControllerTwo.setOutputRange(-0.5, 0.5)
 

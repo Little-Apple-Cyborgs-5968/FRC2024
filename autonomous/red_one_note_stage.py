@@ -1,7 +1,7 @@
 from robotpy_ext.autonomous import StatefulAutonomous, state, timed_state
 
 class Autonomous(StatefulAutonomous):
-    MODE_NAME = "ONE_NOTE_NOSTAGE"
+    MODE_NAME = "RED_ONE_NOTE_STAGE"
     # tx: 7.12 ty: 8.8
 
     def intialize(self):
@@ -28,6 +28,7 @@ class Autonomous(StatefulAutonomous):
         # self.Intake.pivotTwoPosition = -7.5
         self.DriveTrain.robotDrive.driveCartesian(0.3, 0, 0)
         
+    # positive is blue
     @timed_state(duration=0.7, next_state="next")
     def rotate(self):
         self.DriveTrain.robotDrive.driveCartesian(0, 0, 0.3)
@@ -45,7 +46,7 @@ class Autonomous(StatefulAutonomous):
         self.Intake.intakeMotorOne.set(self.Intake.intakeInSpeed)
         self.Intake.intakeMotorTwo.set(self.Intake.intakeInSpeed)
         self.DriveTrain.robotDrive.driveCartesian(0.3, 0, 0)
-
+  
     @timed_state(duration=2)
     def stop(self):
         self.Intake.pivotOnePosition = 0.1

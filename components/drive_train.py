@@ -14,10 +14,10 @@ class DriveTrain:
         self.rearRightMotor = CANSparkMax(CAN.rearRightChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.frontLeftMotor = CANSparkMax(CAN.frontLeftChannel, rev.CANSparkMax.MotorType.kBrushless)
         self.rearLeftMotor = CANSparkMax(CAN.rearLeftChannel, rev.CANSparkMax.MotorType.kBrushless)
-        self.frontRightMotor.restoreFactoryDefaults()
-        self.rearRightMotor.restoreFactoryDefaults()
-        self.frontLeftMotor.restoreFactoryDefaults()
-        self.rearLeftMotor.restoreFactoryDefaults()
+        # self.frontRightMotor.restoreFactoryDefaults()
+        # self.rearRightMotor.restoreFactoryDefaults()
+        # self.frontLeftMotor.restoreFactoryDefaults()
+        # self.rearLeftMotor.restoreFactoryDefaults()
         self.frontRightMotor.setInverted(True)
         self.rearRightMotor.setInverted(True)
 
@@ -46,6 +46,7 @@ class DriveTrain:
     def teleopPeriodic(self):
         # Handles the movement of the drive base.
         if self.Shooterforward:
+            print("shooter forward")
             self.robotDrive.driveCartesian(
                 self.controller.getLeftY(),
                 -self.controller.getLeftX(),
@@ -53,6 +54,7 @@ class DriveTrain:
                 -self.gyroscope.getRotation2d(),
             )
         else:
+            print("intake forward")
             self.robotDrive.driveCartesian(
                 -self.controller.getLeftY(),
                 self.controller.getLeftX(),

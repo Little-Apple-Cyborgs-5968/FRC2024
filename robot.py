@@ -45,12 +45,16 @@ class MyRobot(wpilib.TimedRobot):
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
+        #removed auto for kansas science fair 
+
         self.DriveTrain.autonomousPeriodic()
         self.Shooter.autonomousPeriodic()
         self.Climber.autonomousPeriodic()
         self.Intake.autonomousPeriodic()
         self.auto.periodic()
         self.putValues()
+
+        pass
     
     def disabledInit(self):
         self.auto.disable()
