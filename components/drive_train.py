@@ -104,7 +104,7 @@ class DriveTrain:
             * self.kMaxSpeed
         )
 
-        self.drive(xSpeed, ySpeed, rot, fieldRelative)
+        self.drive(xSpeed, ySpeed, rot)
 
     # we are not using limelight vision processing
     def pointAtTarget(self):
