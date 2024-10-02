@@ -63,13 +63,20 @@ class DriveTrain:
         if self.controller.getAButton():
             self.Shooterforward = not self.Shooterforward
 
-    def drive(self, xSpeed, ySpeed, rot):
-        self.robotDrive.driveCartesian(
-            xSpeed,
-            ySpeed,
-            rot,
-            self.gyroscope.getRotation2d(),
-        )
+    def drive(self, xSpeed, ySpeed, rot, fieldRelative):
+        if fieldRelative:
+            self.robotDrive.driveCartesian(
+                xSpeed,
+                ySpeed,
+                rot,
+                self.gyroscope.getRotation2d(),
+            )
+        else:
+            self.robotDrive.driveCartesian(
+                xSpeed,
+                ySpeed,
+                rot
+            )
 
             
 
@@ -103,8 +110,8 @@ class DriveTrain:
             )
             * self.kMaxSpeed
         )
-
-        self.drive(xSpeed, ySpeed, rot)
+        
+        self.drive(xSpeed, ySpeed, rot, fieldRelative)
 
     # we are not using limelight vision processing
     def pointAtTarget(self):
