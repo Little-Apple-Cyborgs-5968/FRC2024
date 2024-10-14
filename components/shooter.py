@@ -24,4 +24,3 @@ class Shooter:
             self.shooterMotor.set(self.shooterSpeed)
         else:
             self.shooterMotor.set(0)
-    
